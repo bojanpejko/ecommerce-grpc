@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:8000/product_db
+    username: bojan
+    password: admin
+  jpa:
+    generate-ddl: true
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: create
+grpc:
+  server:
+    port: 9090

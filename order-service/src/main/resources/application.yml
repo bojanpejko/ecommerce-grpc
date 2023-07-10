@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:8000/order_db
+    username: bojan
+    password: admin
+  jpa:
+    generate-ddl: true
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: update
+
+grpc:
+  server:
+    port: 9091
+  client:
+    product-service-client:
+      address: static://localhost:9090
+      negotiationType: plaintext

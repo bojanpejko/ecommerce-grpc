@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+
+  postgres:
+    image: postgres:latest
+    container_name: ecommerce_postgres
+    environment:
+      POSTGRES_USER: bojan
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: product_db
+    ports:
+      - 8000:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U bojan" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - local_pgdata:/var/lib/postgresql/data
+      - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: ecommerce_pgadmin
+    ports:
+    - 5050:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: bojan@pejko.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  local_pgdata:
+  pgadmin-data:

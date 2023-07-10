@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package product;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+option java_multiple_files = true;
+option java_package = "com.bojan.ecommerce.product";
+
+message ProductRequest {
+  string uid = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  string category = 5;
+  int32 left_in_stock = 6;
+}
+
+message GetProductRequest {
+  string uid = 1;
+}
+
+message UpdateProductStockRequest {
+  string uid = 1;
+  int32 quantity = 2;
+}
+
+message ProductResponse {
+  string uid = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  string category = 5;
+  int32 left_in_stock = 6;
+}
+
+service ProductService {
+  rpc GetProduct(GetProductRequest) returns (ProductResponse);
+  rpc GetStock(ProductRequest) returns (stream google.protobuf.Int32Value);
+  rpc CreateProducts (stream ProductRequest) returns (google.protobuf.Empty);
+  rpc UpdateProductStock (stream UpdateProductStockRequest) returns (stream google.protobuf.StringValue);
+}
